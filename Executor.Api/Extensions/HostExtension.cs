@@ -12,29 +12,29 @@ namespace Executor.Api.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddHostedService<CodeExecutionWorker>();
+
+            // Configure CORS
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAngular",
-                    builder => builder.WithOrigins("http://localhost:4200") 
-                                      .AllowAnyMethod()
-                                      .AllowAnyHeader());
-                options.AddPolicy("AngularProduction",
-                    builder => builder.WithOrigins("https://judge.bpenchev.info")
-                                      .AllowAnyMethod()
-                                      .AllowAnyHeader());
+                options.AddPolicy("AllowSpecificOrigins", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200", "https://judge.bpenchev.info")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
             });
+
             services.AddScoped<IExecutionService, ExecutionService>();
         }
 
         public static void ConfigurePipeline(this WebApplication? app)
         {
-            
-            
             app.UseSwagger();
             app.UseSwaggerUI();
+
             
-            app.UseCors("AllowAngular");
-            app.UseCors("AngularProduction");
+            app.UseCors("AllowSpecificOrigins");
+
             app.UseAuthorization();
 
             app.MapControllers();
