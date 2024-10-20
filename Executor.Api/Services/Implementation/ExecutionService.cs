@@ -28,7 +28,7 @@ namespace Executor.Api.Services.Implementation
             {
 
                 process.Start();
-
+                var task = process.WaitForExitAsync();
 
                 using (var writer = process.StandardInput)
                 {
@@ -39,22 +39,18 @@ namespace Executor.Api.Services.Implementation
                     }
                 }
 
-
-                string output = await process.StandardOutput.ReadToEndAsync();
-                string error = await process.StandardError.ReadToEndAsync();
-
-
-                await process.WaitForExitAsync();
-                await Console.Out.WriteLineAsync("exited");
-
-
-                if (!string.IsNullOrWhiteSpace(error))
+                if (await Task.WhenAny(task, Task.Delay(5000)) == task)
                 {
-                    Console.WriteLine("Error: " + error);
+                    string output = await process.StandardOutput.ReadToEndAsync();
+                    string error = await process.StandardError.ReadToEndAsync();
+
+                    return output;
                 }
-
-
-                return $"{output}";
+                else
+                {
+                    process.Kill();
+                    return "Timeout";
+                }
             }
         }
     }
