@@ -18,6 +18,10 @@ namespace Executor.Api.Extensions
                     builder => builder.WithOrigins("http://localhost:4200") 
                                       .AllowAnyMethod()
                                       .AllowAnyHeader());
+                options.AddPolicy("AngularProduction",
+                    builder => builder.WithOrigins("https://judge.bpenchev.info")
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
             });
             services.AddScoped<IExecutionService, ExecutionService>();
         }
@@ -30,6 +34,7 @@ namespace Executor.Api.Extensions
             app.UseSwaggerUI();
             
             app.UseCors("AllowAngular");
+            app.UseCors("AngularProduction");
             app.UseAuthorization();
 
             app.MapControllers();
