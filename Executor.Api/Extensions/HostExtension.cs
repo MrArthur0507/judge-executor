@@ -25,11 +25,10 @@ namespace Executor.Api.Extensions
         public static void ConfigurePipeline(this WebApplication? app)
         {
             
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            
             app.UseCors("AllowAngular");
             app.UseAuthorization();
 
