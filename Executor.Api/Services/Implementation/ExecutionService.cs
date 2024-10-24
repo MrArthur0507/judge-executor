@@ -13,21 +13,24 @@ namespace Executor.Api.Services.Implementation
 
         private async Task<string> ExecuteCodeInDocker(string input)
         {
+            
+            
             var processInfo = new ProcessStartInfo
             {
                 FileName = "docker",
-                Arguments = $"run --rm --cap-drop=ALL --tmpfs /tmp --user limiteduser --memory=256m --cpus=0.5 --pids-limit=10 -i mrarthur0507/c_language_executor:1.0",
+                Arguments = $"run --rm  --cap-drop=ALL --tmpfs /tmp --user limiteduser --memory=256m --cpus=0.5 --pids-limit=10 -i mrarthur0507/c_language_executor:1.0",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
             };
 
             using (var process = new Process { StartInfo = processInfo })
             {
 
                 process.Start();
+                
                 var task = process.WaitForExitAsync();
 
                 using (var writer = process.StandardInput)
@@ -43,7 +46,6 @@ namespace Executor.Api.Services.Implementation
                 {
                     string output = await process.StandardOutput.ReadToEndAsync();
                     string error = await process.StandardError.ReadToEndAsync();
-
                     return output;
                 }
                 else

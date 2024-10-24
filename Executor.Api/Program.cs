@@ -1,4 +1,3 @@
-using Executor.Api.Workers;
 using Executor.Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 

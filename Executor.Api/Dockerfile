@@ -3,14 +3,15 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /source
 
-COPY *.sln .
+#COPY Executor.Api/Executor.Api.csproj .
 COPY Executor.Api/Executor.Api.csproj Executor.Api/
 COPY Executor.Models/Executor.Models.csproj Executor.Models/
 
 
-RUN dotnet restore
+RUN dotnet restore Executor.Api/Executor.Api.csproj
 
-COPY . .
+COPY Executor.Api/  Executor.Api/
+COPY Executor.Models/ Executor.Models/
 
 
 RUN dotnet publish Executor.Api/Executor.Api.csproj -c Release -o /app/publish
@@ -25,10 +26,10 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 
-EXPOSE 5000
+EXPOSE 5900
 
 
-ENV ASPNETCORE_URLS=http://*:5000
+ENV ASPNETCORE_URLS=http://*:5900
 ENV ASPNETCORE_ENVIRONMENT=Development
 
 ENTRYPOINT ["dotnet", "Executor.Api.dll"]

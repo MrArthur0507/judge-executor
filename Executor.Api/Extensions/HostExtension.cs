@@ -1,6 +1,6 @@
 ﻿using Executor.Api.Services.Contracts;
 using Executor.Api.Services.Implementation;
-using Executor.Api.Workers;
+using MassTransit;
 
 namespace Executor.Api.Extensions
 {
@@ -11,7 +11,20 @@ namespace Executor.Api.Extensions
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddHostedService<CodeExecutionWorker>();
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("rabbitmq", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                });
+            });
+
+
 
             // Configure CORS
             services.AddCors(options =>
