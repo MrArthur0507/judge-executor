@@ -1,4 +1,4 @@
-﻿namespace JudgeContracts
+namespace JudgeContracts
 {
     public class ExecuteCode
     {

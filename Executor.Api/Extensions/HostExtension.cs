@@ -1,6 +1,4 @@
-﻿using Executor.Api.Services.Contracts;
-using Executor.Api.Services.Implementation;
-using MassTransit;
+﻿using MassTransit;
 
 namespace Executor.Api.Extensions
 {
@@ -37,7 +35,6 @@ namespace Executor.Api.Extensions
                 });
             });
 
-            services.AddScoped<IExecutionService, ExecutionService>();
         }
 
         public static void ConfigurePipeline(this WebApplication? app)

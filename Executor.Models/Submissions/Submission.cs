@@ -9,5 +9,7 @@ namespace Executor.Models.Submissions
     public class Submission
     {
         public string Code { get; set; }
+
+        public string Language {get; set; }
     }
 }
