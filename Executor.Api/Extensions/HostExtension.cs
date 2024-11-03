@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 
+
 namespace Executor.Api.Extensions
 {
     public static class HostExtension
@@ -9,7 +10,7 @@ namespace Executor.Api.Extensions
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
+            services.AddScoped<ICodeExecutor, CodeExecutor>();
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>

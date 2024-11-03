@@ -1,6 +1,7 @@
 using Executor.Models.Submissions;
+using JudgeContracts;
 
 public interface ICodeExecutor
 {
-    public Task<string> ExecuteCode(Submission submission);
+    public Task<ExecuteCodeResult> ExecuteCode(Submission submission);
 }
