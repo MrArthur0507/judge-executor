@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Executor.Mapping;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -15,7 +16,7 @@ namespace Executor.Api.Extensions
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x=> x.MigrationsAssembly("Executor.DataAccess"));
                 
             });
-
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<ICodeExecutor, CodeExecutor>();
             services.AddMassTransit(x =>
             {
