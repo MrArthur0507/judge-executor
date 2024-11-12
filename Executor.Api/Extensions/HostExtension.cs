@@ -1,15 +1,21 @@
 ﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Executor.Api.Extensions
 {
     public static class HostExtension
     {
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddDbContext<DataAccess.AppContext.AppDbContext>(options => {
+                options.UseSqlite(configuration.GetConnectionString("DefaultConnection"), x=> x.MigrationsAssembly("Executor.DataAccess"));
+                
+            });
+
             services.AddScoped<ICodeExecutor, CodeExecutor>();
             services.AddMassTransit(x =>
             {

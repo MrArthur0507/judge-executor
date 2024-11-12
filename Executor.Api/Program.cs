@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // The host configuration happens in extension methods inside the static HostExtension class.
 
-builder.Services.ConfigureServices();
+builder.Services.ConfigureServices(builder.Configuration);
 
 var app = builder.Build();
 
