@@ -23,6 +23,7 @@ namespace Executor.Api.Extensions
             services.AddScoped<ICodeExecutor, CodeExecutor>();
             services.AddScoped<IProblemService, ProblemService>();
             services.AddScoped<IProblemDetailService, ProblemDetailService>();
+            services.AddScoped<ITestCaseService, TestCaseService>();
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>

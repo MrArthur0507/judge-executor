@@ -18,6 +18,8 @@ namespace Executor.Mapping {
 
             CreateMap<TestCase, TestCaseDto>().ReverseMap();
 
+            CreateMap<CreateTestCaseDto, TestCase>();
+
             CreateMap<Submission, SubmissionDto>().ReverseMap();
         }
 }
