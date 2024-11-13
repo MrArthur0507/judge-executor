@@ -1,4 +1,7 @@
 ﻿using Executor.Mapping;
+using Executor.Services.Crud;
+using Executor.Services.CRUD.Contracts;
+using Executor.Services.CRUD.Implementations;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +21,8 @@ namespace Executor.Api.Extensions
             });
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<ICodeExecutor, CodeExecutor>();
+            services.AddScoped<IProblemService, ProblemService>();
+            services.AddScoped<IProblemDetailService, ProblemDetailService>();
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>
